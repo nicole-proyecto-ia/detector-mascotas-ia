@@ -56,4 +56,3 @@ async function predecir() {
     document.getElementById("prediccion-final").innerHTML =
         "Predicción final: " + mejorClase + " (" + mejorPorcentaje.toFixed(2) + "%)";
 }
-}
