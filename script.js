@@ -38,10 +38,22 @@ async function loop() {
 async function predecir() {
     const prediction = await model.predict(webcam.canvas);
 
+    let mejorClase = "";
+    let mejorPorcentaje = 0;
+
     for (let i = 0; i < maxPredictions; i++) {
         const clase = prediction[i].className;
-        const porcentaje = (prediction[i].probability * 100).toFixed(2);
+        const porcentaje = prediction[i].probability * 100;
 
-        labelContainer.childNodes[i].innerHTML = clase + ": " + porcentaje + "%";
+        if (porcentaje > mejorPorcentaje) {
+            mejorPorcentaje = porcentaje;
+            mejorClase = clase;
+        }
+
+        labelContainer.childNodes[i].innerHTML = clase + ": " + porcentaje.toFixed(2) + "%";
     }
+
+    document.getElementById("prediccion-final").innerHTML =
+        "Predicción final: " + mejorClase + " (" + mejorPorcentaje.toFixed(2) + "%)";
+}
 }
